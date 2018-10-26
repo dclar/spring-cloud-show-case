@@ -1,0 +1,29 @@
+server:
+  port: 8761
+
+# Eureka 服务的hostname
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-addressVo: true
+  environment: dclar
+  datacenter: spring-cloud-show-case
+
+
+
+
+
+# 是否需要把Eureka也注册为一个Client 如果需要注册为client register-with-eureka:这里设置为true
+# 如果仅仅运行Standalone Mode的话，这里设置为false即可
+# fetch-registry的定义参看下面的英文解释
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: cloud-eureka
+
+
+

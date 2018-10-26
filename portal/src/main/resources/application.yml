@@ -1,0 +1,91 @@
+server:
+  port: 8001
+  servlet:
+    session:
+      timeout: 60
+    context-path: /portal
+    # spring boot 2.0后可以通过桥接的方式注入到 spring-session的timeout中去 By dcalr See issue
+    # https://github.com/spring-projects/spring-boot/issues/13721
+
+# 注册的服务地址 和Eureka Server一样
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
+
+# 这只为prefer ip的话可以直接展示ip地址
+  instance:
+    prefer-ip-addressVo: true
+spring:
+  application:
+    name: portal
+  thymeleaf:
+    cache: false
+  redis:
+    host: 10.0.47.51
+    port: 6379
+  session:
+    store-type: redis
+    redis:
+      # 注意，以下的配置必须在autoconfigure生效的时候启用，也就是不要显性使用@EnableRedisHttpSession注释
+      flush-mode: on_save
+      namespace: spring>>::session
+
+
+#security:
+#  oauth2:
+#    client:
+#      client-id: ClientId
+#      client-secret: password
+#      access-token-uri: http://localhost:9001/auth/oauth/token
+#      user-authorization-uri: http://localhost:9001/auth/oauth/authorize
+#    resource:
+#      user-info-uri: http://localhost:9002/resource/users/principal
+#debug: true
+
+
+#--------------------
+#zuul:
+#  routes:
+#    oauth:
+#      path: /oauth/**
+#      url: http://localhost:9001/auth/oauth
+#--------------------
+# 这里是一个小坑坑，需要配置routes中的oauth的Scheme与系统中的不同，否则会自动调用OAuth2TokenRelayFilter中的filter
+# 由于OAuth2TokenRelayFilter中自动判断routes是否为空，如果不为空，判断是否是OAuth2模式的proxy，这里首先要配置routes不为空
+# 然后把oauth关闭，设置成none，这样可以保证OAuth2TokenRelayFilter不会运行
+#--------------------
+#proxy:
+#  auth:
+#    routes:
+#      oauth: none
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
+
+#logging:
+#    level:
+#      root: error
+#      org.springframework: debug
+
+# ------------------------------------------------------------------------------------
+# 自定义部分
+# ------------------------------------------------------------------------------------
+custom:
+
+  #oauth2机制改写部分的自定义配置
+  oauth:
+    client-id: ClientId # 需要与Auth Server中注册的一致
+    secret: password
+
+  # oauth2机制改写部分的自定义配置
+  refresh-cookie: # 自定义的refresh_token设定
+    cookieName: RSESSION
+    useHttpOnlyCookie: true
+    cookieMaxAge: 2592000
+    domainNamePattern:
+
+
+

@@ -1,0 +1,38 @@
+server:
+  port: 9901
+  servlet:
+#    session: 暂时不需要session
+#      cookie:
+#        name: cache
+#      timeout: 30
+    context-path: /cache
+
+spring:
+  application:
+    name: cache
+  cache:
+    type: redis #指定使用redis作为@Cache的介质
+    cache-names: addressVo,receipt #CacheNames的设定
+    # 这里的cache下的各种配置也可以使用@CacheConfig
+    redis:
+      key-prefix: "showcase-cache::" #在redis中的key的prefix
+      time-to-live: 60000 # 1 minute
+  redis:
+    host: 10.0.47.51
+    port: 6379
+
+
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
+
+#ribbon:
+#  ReadTimeout: 6000000
+#  ConnectTimeout: 6000000
+
+#feign:
+#  hystrix:
+#    enabled: true
+
+# hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000000

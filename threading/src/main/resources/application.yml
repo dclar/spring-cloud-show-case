@@ -1,0 +1,27 @@
+server:
+  port: 9902
+  servlet:
+#    session: 暂时不需要session
+#      cookie:
+#        name: cache
+#      timeout: 30
+    context-path: /threading
+
+spring:
+  application:
+    name: threading
+
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
+
+#ribbon:
+#  ReadTimeout: 6000000
+#  ConnectTimeout: 6000000
+
+#feign:
+#  hystrix:
+#    enabled: true
+
+# hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000000
